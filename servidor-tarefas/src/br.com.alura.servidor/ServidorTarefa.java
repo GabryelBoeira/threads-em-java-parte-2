@@ -12,6 +12,9 @@ public class ServidorTarefa {
         while (true) {
             Socket socket = serverSocket.accept();
             System.out.println("Aceitando nova conexão na porta: "+ socket.getPort());
+
+            Thread tarefa = new Thread(new DistribuirTarefa(socket));
+            tarefa.start();
         }
     }
 }
