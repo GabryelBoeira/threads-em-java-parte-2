@@ -1,5 +1,7 @@
 package br.com.alura.cliente;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -12,7 +14,12 @@ public class ClienteTarefa {
         Scanner teclado = new Scanner(System.in);
         String mensagem = teclado.nextLine();
 
+        PrintStream saida = new PrintStream(socket.getOutputStream());
+        saida.println("C1");
+
         System.out.println("Enviando mensagem: " + mensagem);
+        teclado.close();
+        saida.close();
         socket.close();
     }
 }
