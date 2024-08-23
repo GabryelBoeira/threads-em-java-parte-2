@@ -15,7 +15,7 @@ public class ClienteTarefa {
         String mensagem = teclado.nextLine();
 
         PrintStream saida = new PrintStream(socket.getOutputStream());
-        saida.println("C1");
+        saida.println("C1 - " + mensagem);
 
         System.out.println("Enviando mensagem: " + mensagem);
         teclado.close();

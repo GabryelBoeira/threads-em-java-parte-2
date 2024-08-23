@@ -2,6 +2,9 @@ package br.com.alura.servidor;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ServidorTarefa {
 
@@ -9,12 +12,17 @@ public class ServidorTarefa {
         System.out.println("---Iniciando o servidor ---");
         ServerSocket serverSocket = new ServerSocket(5000);
 
+        ExecutorService executorService = Executors.newCachedThreadPool();
+//        ExecutorService executorService = Executors.newFixedThreadPool(2);
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+
         while (true) {
+
             Socket socket = serverSocket.accept();
             System.out.println("Aceitando nova conexão na porta: "+ socket.getPort());
 
-            Thread tarefa = new Thread(new DistribuirTarefa(socket));
-            tarefa.start();
+            executorService.execute(new DistribuirTarefa(socket));
         }
     }
 }
