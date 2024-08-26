@@ -11,27 +11,28 @@ public class ServidorDeTeste {
     }
 
     private void rodar() {
-        new Thread(() -> {
-            System.out.println("Servidor começando, estaRodando = " + estaRodando);
+        new Thread(new TarefaPararServidorTeste(this)).start();
+    }
 
-            while (!estaRodando) {}
+    public synchronized boolean estaRodando() {
+        return this.estaRodando;
+    }
 
-            System.out.println("Servidor rodando, estaRodando = " + estaRodando);
+    public synchronized void parar() {
+        this.estaRodando = false;
+    }
 
-            while (estaRodando) {}
-
-            System.out.println("Servidor terminando, estaRodando = " + estaRodando);
-
-        }).start();
+    public synchronized void ligar() {
+        this.estaRodando = true;
     }
 
     private void alterandoAtributo() throws InterruptedException {
         Thread.sleep(5000);
         System.out.println("Main alterando estaRodando = true");
-        estaRodando = true;
+        this.ligar();
 
         Thread.sleep(5000);
         System.out.println("Main alterando estaRodando = false");
-        estaRodando = false;
+        this.parar();
     }
 }
