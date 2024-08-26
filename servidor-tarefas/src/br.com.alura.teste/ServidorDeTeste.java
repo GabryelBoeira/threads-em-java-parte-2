@@ -1,4 +1,4 @@
-package br.com.alura.servidor.teste;
+package br.com.alura.teste;
 
 public class ServidorDeTeste {
 
@@ -11,7 +11,11 @@ public class ServidorDeTeste {
     }
 
     private void rodar() {
-        new Thread(new TarefaPararServidorTeste(this)).start();
+        Thread thread = new Thread(new TarefaPararServidorTeste(this));
+
+        thread.setUncaughtExceptionHandler(new UncaughtExceptionHandlerCustom());
+
+        thread.start();
     }
 
     public synchronized boolean estaRodando() {
