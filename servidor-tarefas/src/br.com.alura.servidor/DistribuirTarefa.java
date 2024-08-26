@@ -34,7 +34,7 @@ public record DistribuirTarefa(Socket socket, ServidorTarefa servidor) implement
                     case "FIM": {
                         saidaCliente.println("Desligando servidor");
                         servidor.finalizarServidor();
-                        break;
+                        return;
                     }
                     default: {
                         saidaCliente.println("Tarefa nao encontrada");
