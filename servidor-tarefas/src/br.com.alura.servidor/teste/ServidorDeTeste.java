@@ -1,4 +1,4 @@
-package br.com.alura.servidor;
+package br.com.alura.servidor.teste;
 
 public class ServidorDeTeste {
 
