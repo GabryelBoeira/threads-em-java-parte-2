@@ -10,7 +10,7 @@ public record TarefaThreadFactory(ThreadFactory defaultFactory) implements Threa
 
     @Override
     public Thread newThread(Runnable r) {
-        
+
         //Thread thread = new Thread(r, "Tarefa Thread " + CONTADOR);
         Thread thread = defaultFactory.newThread(r);
         thread.setName("Tarefa Thread " + CONTADOR);
