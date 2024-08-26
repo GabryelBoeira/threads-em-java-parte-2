@@ -17,7 +17,7 @@ public class ServidorTarefa {
     public ServidorTarefa() throws IOException {
         System.out.println("---Iniciando o servidor ---");
         this.serverSocket = new ServerSocket(5000);
-        this.executorService = Executors.newFixedThreadPool(4);
+        this.executorService = Executors.newFixedThreadPool(4, new TarefaThreadFactory());
         this.estaExecutando = new AtomicBoolean(true);
     }
 

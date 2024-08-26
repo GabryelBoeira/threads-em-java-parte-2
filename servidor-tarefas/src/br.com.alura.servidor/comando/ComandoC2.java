@@ -9,12 +9,14 @@ public record ComandoC2(PrintStream saida) implements Runnable {
         System.out.println("Executando o comando C2");
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        saida.println("C2 executado com sucesso");
+        throw new RuntimeException("C2 falhou depois de 5 segundos");
+
+        //saida.println("C2 executado com sucesso");
     }
 
 }
