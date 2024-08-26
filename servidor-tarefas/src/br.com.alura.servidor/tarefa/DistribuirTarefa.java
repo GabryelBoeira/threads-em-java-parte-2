@@ -27,18 +27,16 @@ public record DistribuirTarefa(ExecutorService executorService, Socket socket, S
 
                 switch (linha) {
                     case "C1": {
-                        saidaCliente.println("Tarefa C1 concluída com sucesso");
+                        saidaCliente.println("Chamando Tarefa C1");
                         executorService.execute(new ComandoC1(saidaCliente));
                         break;
                     }
                     case "C2": {
-                        saidaCliente.println("Tarefa C2 concluída com sucesso");
+                        saidaCliente.println("Chamando Tarefa C2");
                         Future<String> futureWS = executorService.submit(new ComandoC2ChamaWebService(saidaCliente));
                         Future<String> futureBD = executorService.submit(new ComandoC2ChamaBancoDeDados(saidaCliente));
 
-
-                        String resultadoWS = futureWS.get();
-                        String resultadoBD = futureBD.get();
+                        this.executorService.submit(new JuntarResultadosFutureWSBD(futureWS, futureBD, saidaCliente));
                         break;
                     }
                     case "C3": {

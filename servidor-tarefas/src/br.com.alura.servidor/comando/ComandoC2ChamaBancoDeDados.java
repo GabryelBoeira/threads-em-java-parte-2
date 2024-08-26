@@ -12,7 +12,7 @@ public record ComandoC2ChamaBancoDeDados(PrintStream saida) implements Callable<
 
         saida.println("Processando C2 - Chama Banco de Dados");
         Thread.sleep(10000);
-        Integer numero = new Random().nextInt(100) + 1;
+        Integer numero = new Random().nextInt(1000) + 1;
         
         saida.println("Comando C2 Finalizado - Banco de Dados");
 

@@ -14,6 +14,7 @@ public record ComandoC1(PrintStream saida) implements Runnable {
             throw new RuntimeException(e);
         }
 
+        System.out.println("C1 finalizado");
         saida.println("C1 executado com sucesso");
     }
 
