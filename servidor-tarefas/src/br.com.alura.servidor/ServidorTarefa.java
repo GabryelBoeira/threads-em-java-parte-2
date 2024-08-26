@@ -1,26 +1,42 @@
 package br.com.alura.servidor;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ServidorTarefa {
 
-    public static void main(String[] args) throws Exception {
+    private ServerSocket serverSocket;
+    private ExecutorService executorService;
+    private boolean estaExecutando;
+
+    public ServidorTarefa() throws IOException {
         System.out.println("---Iniciando o servidor ---");
-        ServerSocket serverSocket = new ServerSocket(5000);
+        this.serverSocket = new ServerSocket(5000);
+        this.executorService = Executors.newCachedThreadPool();
+        this.estaExecutando = true;
+    }
 
-        ExecutorService executorService = Executors.newCachedThreadPool();
-//        ExecutorService executorService = Executors.newFixedThreadPool(2);
-//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+    public void iniciarServidor() throws IOException {
+        while (this.estaExecutando) {
+            try {
+                Socket socket = serverSocket.accept();
+                System.out.println("Aceitando nova conexão na porta: "+ socket.getPort());
 
-
-        while (true) {
-            Socket socket = serverSocket.accept();
-            System.out.println("Aceitando nova conexão na porta: "+ socket.getPort());
-
-            executorService.execute(new DistribuirTarefa(socket));
+                executorService.execute(new DistribuirTarefa(socket, this));
+            } catch (SocketException e) {
+                System.out.println("Servidor finalizado");
+            }
         }
     }
+
+    public void finalizarServidor() throws IOException {
+        estaExecutando = false;
+        serverSocket.close();
+        executorService.shutdown();
+    }
+
 }
