@@ -1,4 +1,7 @@
-package br.com.alura.servidor;
+package br.com.alura.servidor.tarefa;
+
+import br.com.alura.servidor.comando.ComandoC1;
+import br.com.alura.servidor.comando.ComandoC2;
 
 import java.io.PrintStream;
 import java.net.Socket;

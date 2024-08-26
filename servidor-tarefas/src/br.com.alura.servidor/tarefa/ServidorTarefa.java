@@ -1,4 +1,4 @@
-package br.com.alura.servidor;
+package br.com.alura.servidor.tarefa;
 
 import java.io.IOException;
 import java.net.ServerSocket;

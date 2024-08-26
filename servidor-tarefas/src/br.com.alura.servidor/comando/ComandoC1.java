@@ -1,12 +1,12 @@
-package br.com.alura.servidor;
+package br.com.alura.servidor.comando;
 
 import java.io.PrintStream;
 
-public record ComandoC2(PrintStream saida) implements Runnable {
+public record ComandoC1(PrintStream saida) implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Executando o comando C2");
+        System.out.println("Executando o comando C1");
 
         try {
             Thread.sleep(10000);
@@ -14,7 +14,7 @@ public record ComandoC2(PrintStream saida) implements Runnable {
             throw new RuntimeException(e);
         }
 
-        saida.println("C2 executado com sucesso");
+        saida.println("C1 executado com sucesso");
     }
 
 }
