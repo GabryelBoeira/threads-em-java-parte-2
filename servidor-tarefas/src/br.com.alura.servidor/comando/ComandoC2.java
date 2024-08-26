@@ -2,6 +2,7 @@ package br.com.alura.servidor.comando;
 
 import java.io.PrintStream;
 
+@Deprecated
 public record ComandoC2(PrintStream saida) implements Runnable {
 
     @Override

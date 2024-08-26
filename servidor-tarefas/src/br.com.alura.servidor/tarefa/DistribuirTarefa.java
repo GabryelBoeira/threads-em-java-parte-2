@@ -2,11 +2,14 @@ package br.com.alura.servidor.tarefa;
 
 import br.com.alura.servidor.comando.ComandoC1;
 import br.com.alura.servidor.comando.ComandoC2;
+import br.com.alura.servidor.comando.ComandoC2ChamaBancoDeDados;
+import br.com.alura.servidor.comando.ComandoC2ChamaWebService;
 
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 public record DistribuirTarefa(ExecutorService executorService, Socket socket, ServidorTarefa servidor) implements Runnable {
 
@@ -30,7 +33,12 @@ public record DistribuirTarefa(ExecutorService executorService, Socket socket, S
                     }
                     case "C2": {
                         saidaCliente.println("Tarefa C2 concluída com sucesso");
-                        executorService.execute(new ComandoC2(saidaCliente));
+                        Future<String> futureWS = executorService.submit(new ComandoC2ChamaWebService(saidaCliente));
+                        Future<String> futureBD = executorService.submit(new ComandoC2ChamaBancoDeDados(saidaCliente));
+
+
+                        String resultadoWS = futureWS.get();
+                        String resultadoBD = futureBD.get();
                         break;
                     }
                     case "C3": {
