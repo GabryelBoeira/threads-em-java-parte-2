@@ -17,7 +17,7 @@ public class ServidorTarefa {
     public ServidorTarefa() throws IOException {
         System.out.println("---Iniciando o servidor ---");
         this.serverSocket = new ServerSocket(5000);
-        this.executorService = Executors.newCachedThreadPool();
+        this.executorService = Executors.newFixedThreadPool(4);
         this.estaExecutando = new AtomicBoolean(true);
     }
 
@@ -27,7 +27,7 @@ public class ServidorTarefa {
                 Socket socket = serverSocket.accept();
                 System.out.println("Aceitando nova conexão na porta: "+ socket.getPort());
 
-                executorService.execute(new DistribuirTarefa(socket, this));
+                executorService.execute(new DistribuirTarefa(executorService, socket, this));
             } catch (SocketException e) {
                 System.out.println("Servidor finalizado");
             }

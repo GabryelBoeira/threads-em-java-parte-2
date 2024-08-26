@@ -3,8 +3,9 @@ package br.com.alura.servidor;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
 
-public record DistribuirTarefa(Socket socket, ServidorTarefa servidor) implements Runnable {
+public record DistribuirTarefa(ExecutorService executorService, Socket socket, ServidorTarefa servidor) implements Runnable {
 
     @Override
     public void run() {
@@ -21,10 +22,12 @@ public record DistribuirTarefa(Socket socket, ServidorTarefa servidor) implement
                 switch (linha) {
                     case "C1": {
                         saidaCliente.println("Tarefa C1 concluída com sucesso");
+                        executorService.execute(new ComandoC1(saidaCliente));
                         break;
                     }
                     case "C2": {
                         saidaCliente.println("Tarefa C2 concluída com sucesso");
+                        executorService.execute(new ComandoC2(saidaCliente));
                         break;
                     }
                     case "C3": {
