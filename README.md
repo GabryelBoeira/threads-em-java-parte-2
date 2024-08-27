@@ -7,3 +7,8 @@ Threads em Java 2: programação concorrente avançada, link para a  [parte-1](h
 - Reaproveite threads
 - Sincronize threads de leitura e escrita
 - Trabalhe com Filas
+
+
+[Certificado de conclusão do curso](https://cursos.alura.com.br/certificate/64a6130f-672a-4f7b-963b-4669b3c8e832?lang)
+
+**_ Curso Concluido _**
