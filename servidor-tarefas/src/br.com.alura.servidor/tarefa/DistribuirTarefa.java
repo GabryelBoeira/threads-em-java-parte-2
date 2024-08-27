@@ -1,17 +1,19 @@
 package br.com.alura.servidor.tarefa;
 
 import br.com.alura.servidor.comando.ComandoC1;
-import br.com.alura.servidor.comando.ComandoC2;
 import br.com.alura.servidor.comando.ComandoC2ChamaBancoDeDados;
 import br.com.alura.servidor.comando.ComandoC2ChamaWebService;
 
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public record DistribuirTarefa(ExecutorService executorService, Socket socket, ServidorTarefa servidor) implements Runnable {
+public record DistribuirTarefa(ExecutorService executorService, Socket socket, ServidorTarefa servidor,
+                               BlockingQueue<String> fila) implements Runnable {
+
 
     @Override
     public void run() {
@@ -22,10 +24,10 @@ public record DistribuirTarefa(ExecutorService executorService, Socket socket, S
             PrintStream saidaCliente = new PrintStream(socket.getOutputStream());
 
             while (entradaCliente.hasNextLine()) {
-                String linha = entradaCliente.nextLine().toUpperCase();
-                System.out.println("Comando recebido: " + linha);
+                String comando = entradaCliente.nextLine().toUpperCase();
+                //System.out.println("Comando recebido: " + comando);
 
-                switch (linha) {
+                switch (comando) {
                     case "C1": {
                         saidaCliente.println("Chamando Tarefa C1");
                         executorService.execute(new ComandoC1(saidaCliente));
@@ -40,7 +42,8 @@ public record DistribuirTarefa(ExecutorService executorService, Socket socket, S
                         break;
                     }
                     case "C3": {
-                        saidaCliente.println("Tarefa C3 concluída com sucesso");
+                        saidaCliente.println("Tarefa C3 alimentada na fila");
+                        this.fila.put(comando);//blocks
                         break;
                     }
                     case "FIM": {
