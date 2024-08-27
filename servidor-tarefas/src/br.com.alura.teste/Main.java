@@ -1,4 +1,4 @@
-package br.com.alura.testes;
+package br.com.alura.teste;
 
 import java.util.Set;
 

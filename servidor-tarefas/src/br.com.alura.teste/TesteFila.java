@@ -1,4 +1,4 @@
-package br.com.alura.testes;
+package br.com.alura.teste;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
